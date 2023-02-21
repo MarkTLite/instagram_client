@@ -1,0 +1,7 @@
+aiofiles
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+passlib
+bcrypt
