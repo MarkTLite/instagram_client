@@ -12,5 +12,6 @@ router = APIRouter(
 
 @router.post('/create', response_model=UserResponse)
 def create_user(user: UserRequest, db: Session = Depends(get_db)):
+    """Registering a user"""
     user = user_controller.create_user(db, user)
     return user
