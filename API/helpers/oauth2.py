@@ -1,20 +1,27 @@
 from typing import Optional
 from datetime import timedelta, datetime
 from sqlalchemy.orm.session import Session
+import os
+from os.path import join, dirname
 
 from fastapi import Depends, status
 from fastapi.exceptions import HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from jose.exceptions import JWTError
+from dotenv import load_dotenv
 
 from databases.database import get_db
 from controllers import user_controller
 
-oauth2_schema = OAuth2PasswordBearer(tokenUrl='token')
+oauth2_schema = OAuth2PasswordBearer(tokenUrl='auth/login')
 
-SECRET_KEY = 'dde97a3d8a52c59c5857b99ae7ae678e6c44ab080e9e94d3b5df3d3645f44373'
-ALGORITHM = 'HS256'
+#load env vars
+dotenv_path = join(dirname(dirname(__file__)), '.env')
+load_dotenv(dotenv_path)
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+ALGORITHM = os.getenv('ALGORITHM')
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
@@ -35,7 +42,7 @@ def get_current_user(token: str = Depends(oauth2_schema), db: Session = Depends(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload['sub']
+        username: str = payload['username']
         if not username:
             raise cred_exception
     except JWTError:

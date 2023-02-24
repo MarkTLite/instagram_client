@@ -56,3 +56,13 @@ def upload_image(
         shutil.copyfileobj(image.file, buffer)
 
     return {"image_path": path}
+
+
+@router.delete("/delete/{id}")
+def delete_post(
+    id: int,
+    db: Session = Depends(get_db),
+    authed_user: UserAuthSchema = Depends(oauth2.get_current_user),
+):
+    """Delete a post using its ID"""
+    return post_controller.delete_post_by_id(id, authed_user.id, db)

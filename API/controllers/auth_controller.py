@@ -1,5 +1,5 @@
 from fastapi import status
-from fastapi.param_functions import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm.session import Session
 from fastapi.exceptions import HTTPException
 
@@ -7,7 +7,7 @@ from models.user_model import UserModel
 from helpers.hashing import HashPwd
 
 def verify_oauth2_creds(request: OAuth2PasswordRequestForm, db: Session):
-    """Verify Oauth2 creds and return the user if correct"""
+    """Verify input Oauth2 creds and return the user if correct"""
     user = db.query(UserModel).filter(UserModel.username == request.username).first()
     if not user:
         raise HTTPException(

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from fastapi.param_functions import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm.session import Session
 from fastapi.exceptions import HTTPException
 
