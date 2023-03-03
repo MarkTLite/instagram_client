@@ -66,3 +66,4 @@ def delete_post(
 ):
     """Delete a post using its ID"""
     return post_controller.delete_post_by_id(id, authed_user.id, db)
+

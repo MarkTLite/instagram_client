@@ -16,3 +16,4 @@ class PostModel(Base):
     timestamp = Column(DateTime)
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('UserModel', back_populates='posts')
+    comments = relationship('CommentModel', back_populates='post')

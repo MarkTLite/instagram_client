@@ -3,7 +3,8 @@ JSON Schema for post endpoints
 """
 from pydantic import BaseModel
 from datetime import datetime
-
+from schemas.comment_schema import Comment
+from typing import List
 
 class PostRequest(BaseModel):
     image_url: str
@@ -28,6 +29,7 @@ class PostResponse(BaseModel):
     caption: str
     timestamp: datetime
     user: UserSchema
+    comments: List[Comment]
 
     class Config:
         orm_mode = True
